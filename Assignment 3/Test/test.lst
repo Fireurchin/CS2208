@@ -1,0 +1,95 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             test, CODE, READONLY
+    2 00000000                 ENTRY                        ;the dragon
+    3 00000000         
+    4 00000000 E28F8020        ADR              r8, STRING
+    5 00000004 E28F9034        ADR              r9, EoS
+    6 00000008 E4592001        LDRB             r2, [r9], #-1
+    7 0000000C E5DFC02C        LDRB             r12, EoS
+    8 00000010         
+    9 00000010 E4D81001 
+                       Loop1   LDRB             r1, [r8], #1 ;Loads Big endian 
+                                                            digit to be tested
+   10 00000014 E4592001        LDRB             r2, [r9], #-1
+   11 00000018 E3811020        ORR              r1, r1, #2_100000
+   12 0000001C E131000C        TEQ              r1, r12     ;Tests if end of st
+                                                            ring has been reach
+                                                            ed
+   13 00000020 1AFFFFFA        BNE              Loop1       ;Repeats loop until
+                                                             null terminator is
+                                                             reached and string
+                                                             is fully processed
+                                                            
+   14 00000024         
+   15 00000024 EAFFFFFE 
+                       Loop    B                Loop
+   16 00000028         
+   17 00000028 48 65 20 
+              6C 69 76 
+              65 64 20 
+              61 73 20 
+              61 20 64 
+              65 76 69 
+              6C 2C 20 
+              65 68 3F STRING  DCB              "He lived as a devil, eh?" 
+                                                            ;string
+   18 00000040 00      EoS     DCB              0x00        ;end of string
+   19 00000041         
+   20 00000041                 END
+Command Line: --debug --xref --bi --apcs=interwork --depend=.\test.d -o.\test.o
+ -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include --predefine="__EVAL SETA 1"
+ --list=.\test.lst test.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+EoS 00000040
+
+Symbol: EoS
+   Definitions
+      At line 18 in file test.s
+   Uses
+      At line 5 in file test.s
+      At line 7 in file test.s
+
+Loop 00000024
+
+Symbol: Loop
+   Definitions
+      At line 15 in file test.s
+   Uses
+      At line 15 in file test.s
+Comment: Loop used once
+Loop1 00000010
+
+Symbol: Loop1
+   Definitions
+      At line 9 in file test.s
+   Uses
+      At line 13 in file test.s
+Comment: Loop1 used once
+STRING 00000028
+
+Symbol: STRING
+   Definitions
+      At line 17 in file test.s
+   Uses
+      At line 4 in file test.s
+Comment: STRING used once
+test 00000000
+
+Symbol: test
+   Definitions
+      At line 1 in file test.s
+   Uses
+      None
+Comment: test unused
+5 symbols
+336 symbols in table
