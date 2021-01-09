@@ -1,0 +1,121 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             question1, CODE, READONLY
+    2 00000000                 ENTRY                        ;The Dragon
+    3 00000000         
+    4 00000000 E28FD03C 
+                       Main    ADR              sp,Stack    ;set up r13 as the 
+                                                            stack pointer
+    5 00000004 E3A0007C        MOV              r0,#124     ;set up a dummy par
+                                                            ameter in r0
+    6 00000008 E3A0B07B        MOV              fp,#123     ;set up dummy frame
+                                                             pointer
+    7 0000000C E52D0004        STR              r0,[sp,#-4]! 
+                                                            ;push the parameter
+                                                            
+    8 00000010         
+    9 00000010 E92D0800        STMFD            sp!,{fp}    ;push frame-pointer
+                                                             and link-register
+   10 00000014 E1A0B00D        MOV              fp,sp       ;frame pointer at t
+                                                            he bottom of the fr
+                                                            ame
+   11 00000018 E24DD004        SUB              sp,sp,#4    ;create the stack f
+                                                            rame (one word)
+   12 0000001C E59B2008        LDR              r2,[fp,#8]  ;get the pushed par
+                                                            ameter
+   13 00000020 E2822078        ADD              r2,r2,#120  ;do a dummy operati
+                                                            on on the parameter
+                                                            
+   14 00000024 E50B2004        STR              r2,[fp,#-4] ;store it in the st
+                                                            ack frame
+   15 00000028 E28DD004        ADD              sp,sp,#4    ;clean up the stack
+                                                             frame
+   16 0000002C E8BD0800        LDMFD            sp!,{fp}
+   17 00000030         
+   18 00000030 E49D1004        LDR              r1,[sp],#4  ;pop the parameter
+   19 00000034 EAFFFFFE 
+                       Loop    B                Loop
+   20 00000038         
+   21 00000038 00000000 
+                       Crack   DCD              0x0000
+   22 0000003C 00000000        DCD              0x0000
+   23 00000040 00000000        DCD              0x0000
+   24 00000044 00000111 
+                       Stack   DCD              0x111
+   25 00000048 00000333 
+                       ACKLE   DCD              0x333
+   26 0000004C 00000555 
+                       POT     DCD              0x555
+   27 00000050         
+   28 00000050                 END
+Command Line: --debug --xref --bi --apcs=interwork --depend=.\question1.d -o.\q
+uestion1.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include --predefine="__EV
+AL SETA 1" --list=.\question1.lst question1.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ACKLE 00000048
+
+Symbol: ACKLE
+   Definitions
+      At line 25 in file question1.s
+   Uses
+      None
+Comment: ACKLE unused
+Crack 00000038
+
+Symbol: Crack
+   Definitions
+      At line 21 in file question1.s
+   Uses
+      None
+Comment: Crack unused
+Loop 00000034
+
+Symbol: Loop
+   Definitions
+      At line 19 in file question1.s
+   Uses
+      At line 19 in file question1.s
+Comment: Loop used once
+Main 00000000
+
+Symbol: Main
+   Definitions
+      At line 4 in file question1.s
+   Uses
+      None
+Comment: Main unused
+POT 0000004C
+
+Symbol: POT
+   Definitions
+      At line 26 in file question1.s
+   Uses
+      None
+Comment: POT unused
+Stack 00000044
+
+Symbol: Stack
+   Definitions
+      At line 24 in file question1.s
+   Uses
+      At line 4 in file question1.s
+Comment: Stack used once
+question1 00000000
+
+Symbol: question1
+   Definitions
+      At line 1 in file question1.s
+   Uses
+      None
+Comment: question1 unused
+7 symbols
+338 symbols in table
