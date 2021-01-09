@@ -1,0 +1,165 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             question1, CODE, READONLY
+    2 00000000                 ENTRY                        ;the dragon
+    3 00000000         
+    4 00000000 E3A05006        MOV              r5, #6      ;Sets counter for f
+                                                            or loop of 5 iterat
+                                                            ions (Capacity of e
+                                                            ach half)
+    5 00000004 E28F803C        ADR              r8, UPC     ;Register 8 points 
+                                                            to UPC barcode, all
+                                                            ows for LDRB and lo
+                                                            op operations
+    6 00000008         
+    7 00000008 E4D87001 
+                       Barcode LDRB             r7, [r8], #1 ;Increments the va
+                                                            lue of register 6 t
+                                                            o store the first e
+                                                            ven digit
+    8 0000000C E2477030        SUB              r7, #0x30   ;Coverts char value
+                                                             at UPC position to
+                                                             be stored as an in
+                                                            teger
+    9 00000010 E4D86001        LDRB             r6, [r8], #1 ;Register 6 is ass
+                                                            igned to store the 
+                                                            current odd barcode
+                                                             digit
+   10 00000014 E2466030        SUB              r6, #0x30   ;Coverts char value
+                                                             at UPC position to
+                                                             be stored as an in
+                                                            teger
+   11 00000018 E0811006        ADD              r1, r6      ;Performs add opera
+                                                            tion on odd barcode
+                                                             digits (second sum
+                                                            ) and stores in reg
+                                                            ister 1
+   12 0000001C E0822007        ADD              r2, r7      ;Performs add opera
+                                                            tion on even barcod
+                                                            e digits (first sum
+                                                            ) and stores in reg
+                                                            ister 2
+   13 00000020 E2555001        SUBS             r5, #1      ;Decreases loop cou
+                                                            nter by 1
+   14 00000024 1AFFFFF7        BNE              Barcode     ;Loops operation un
+                                                            til counter reaches
+                                                             0
+   15 00000028         
+   16 00000028 E0822082        ADD              r2, r2, LSL #1 ;Multiplies valu
+                                                            e of register 1 by 
+                                                            three
+   17 0000002C E0823001        ADD              r3, r2, r1  ;Adds the tripled f
+                                                            irst sum to the sec
+                                                            ond sum and stores 
+                                                            final sum in regist
+                                                            er 3
+   18 00000030 E253300A 
+                       Divide  SUBS             r3, #10     ;Division loop to t
+                                                            est whether checksu
+                                                            m is a multiple of 
+                                                            10
+   19 00000034 0A000001        BEQ              FalPos      ;If checksum is a m
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            ultiple of 10, bran
+                                                            ch to Falpos
+   20 00000038 5AFFFFFC        BPL              Divide      ;Re-enter loop unti
+                                                            l true
+   21 0000003C         
+   22 0000003C E3A00001 
+                       Pos     MOV              r0, #1      ;Value at register 
+                                                            0 will retroactivel
+                                                            y be 2 if barcode i
+                                                            s invalid (not mult
+                                                            iple of 10)
+   23 00000040 E2800001 
+                       FalPos  ADD              r0, #1      ;Set value at regis
+                                                            ter 0 to 1 if barco
+                                                            de is valid
+   24 00000044         
+   25 00000044 EAFFFFFE 
+                       Loop    B                Loop        ;Infinite Loop to h
+                                                            elp with memory map
+                                                            ping
+   26 00000048         
+   27 00000048 30 31 33 
+              38 30 30 
+              31 35 30 
+              37 33 38 UPC     DCB              "013800150738" ;UPC string
+   28 00000054         
+   29 00000054                 END
+Command Line: --debug --xref --bi --apcs=interwork --depend=.\question1.d -o.\q
+uestion1.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include --predefine="__EV
+AL SETA 1" --list=.\question1.lst question1.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Barcode 00000008
+
+Symbol: Barcode
+   Definitions
+      At line 7 in file question1.s
+   Uses
+      At line 14 in file question1.s
+Comment: Barcode used once
+Divide 00000030
+
+Symbol: Divide
+   Definitions
+      At line 18 in file question1.s
+   Uses
+      At line 20 in file question1.s
+Comment: Divide used once
+FalPos 00000040
+
+Symbol: FalPos
+   Definitions
+      At line 23 in file question1.s
+   Uses
+      At line 19 in file question1.s
+Comment: FalPos used once
+Loop 00000044
+
+Symbol: Loop
+   Definitions
+      At line 25 in file question1.s
+   Uses
+      At line 25 in file question1.s
+Comment: Loop used once
+Pos 0000003C
+
+Symbol: Pos
+   Definitions
+      At line 22 in file question1.s
+   Uses
+      None
+Comment: Pos unused
+UPC 00000048
+
+Symbol: UPC
+   Definitions
+      At line 27 in file question1.s
+   Uses
+      At line 5 in file question1.s
+Comment: UPC used once
+question1 00000000
+
+Symbol: question1
+   Definitions
+      At line 1 in file question1.s
+   Uses
+      None
+Comment: question1 unused
+7 symbols
+338 symbols in table
